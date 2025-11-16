@@ -14,7 +14,275 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      game_hubs: {
+        Row: {
+          banner_url: string | null
+          created_at: string | null
+          description: string | null
+          icon_url: string | null
+          id: string
+          member_count: number | null
+          name: string
+          slug: string
+        }
+        Insert: {
+          banner_url?: string | null
+          created_at?: string | null
+          description?: string | null
+          icon_url?: string | null
+          id?: string
+          member_count?: number | null
+          name: string
+          slug: string
+        }
+        Update: {
+          banner_url?: string | null
+          created_at?: string | null
+          description?: string | null
+          icon_url?: string | null
+          id?: string
+          member_count?: number | null
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      hub_members: {
+        Row: {
+          hub_id: string | null
+          id: string
+          joined_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          hub_id?: string | null
+          id?: string
+          joined_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          hub_id?: string | null
+          id?: string
+          joined_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hub_members_hub_id_fkey"
+            columns: ["hub_id"]
+            isOneToOne: false
+            referencedRelation: "game_hubs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hub_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      hub_posts: {
+        Row: {
+          comments_count: number | null
+          content: string
+          created_at: string | null
+          hub_id: string | null
+          id: string
+          image_url: string | null
+          likes_count: number | null
+          user_id: string | null
+        }
+        Insert: {
+          comments_count?: number | null
+          content: string
+          created_at?: string | null
+          hub_id?: string | null
+          id?: string
+          image_url?: string | null
+          likes_count?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          comments_count?: number | null
+          content?: string
+          created_at?: string | null
+          hub_id?: string | null
+          id?: string
+          image_url?: string | null
+          likes_count?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hub_posts_hub_id_fkey"
+            columns: ["hub_id"]
+            isOneToOne: false
+            referencedRelation: "game_hubs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hub_posts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      physical_games: {
+        Row: {
+          condition: Database["public"]["Enums"]["game_condition"]
+          created_at: string | null
+          description: string | null
+          id: string
+          images: string[] | null
+          includes_box: boolean | null
+          includes_manual: boolean | null
+          is_available: boolean | null
+          is_sealed: boolean | null
+          location: string | null
+          platform: Database["public"]["Enums"]["game_platform"]
+          price: number
+          seller_id: string | null
+          shipping_method: Database["public"]["Enums"]["shipping_method"] | null
+          title: string
+          updated_at: string | null
+          views_count: number | null
+        }
+        Insert: {
+          condition: Database["public"]["Enums"]["game_condition"]
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          images?: string[] | null
+          includes_box?: boolean | null
+          includes_manual?: boolean | null
+          is_available?: boolean | null
+          is_sealed?: boolean | null
+          location?: string | null
+          platform: Database["public"]["Enums"]["game_platform"]
+          price: number
+          seller_id?: string | null
+          shipping_method?:
+            | Database["public"]["Enums"]["shipping_method"]
+            | null
+          title: string
+          updated_at?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          condition?: Database["public"]["Enums"]["game_condition"]
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          images?: string[] | null
+          includes_box?: boolean | null
+          includes_manual?: boolean | null
+          is_available?: boolean | null
+          is_sealed?: boolean | null
+          location?: string | null
+          platform?: Database["public"]["Enums"]["game_platform"]
+          price?: number
+          seller_id?: string | null
+          shipping_method?:
+            | Database["public"]["Enums"]["shipping_method"]
+            | null
+          title?: string
+          updated_at?: string | null
+          views_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "physical_games_seller_id_fkey"
+            columns: ["seller_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string | null
+          display_name: string | null
+          id: string
+          total_earnings: number | null
+          total_sales: number | null
+          trader_level: number | null
+          trader_xp: number | null
+          updated_at: string | null
+          username: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          display_name?: string | null
+          id: string
+          total_earnings?: number | null
+          total_sales?: number | null
+          trader_level?: number | null
+          trader_xp?: number | null
+          updated_at?: string | null
+          username: string
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          display_name?: string | null
+          id?: string
+          total_earnings?: number | null
+          total_sales?: number | null
+          trader_level?: number | null
+          trader_xp?: number | null
+          updated_at?: string | null
+          username?: string
+        }
+        Relationships: []
+      }
+      user_game_libraries: {
+        Row: {
+          added_at: string | null
+          for_sale: boolean | null
+          for_trade: boolean | null
+          game_title: string
+          id: string
+          platform: Database["public"]["Enums"]["game_platform"]
+          user_id: string | null
+        }
+        Insert: {
+          added_at?: string | null
+          for_sale?: boolean | null
+          for_trade?: boolean | null
+          game_title: string
+          id?: string
+          platform: Database["public"]["Enums"]["game_platform"]
+          user_id?: string | null
+        }
+        Update: {
+          added_at?: string | null
+          for_sale?: boolean | null
+          for_trade?: boolean | null
+          game_title?: string
+          id?: string
+          platform?: Database["public"]["Enums"]["game_platform"]
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_game_libraries_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +291,16 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      game_condition: "mint" | "excellent" | "good" | "fair" | "poor"
+      game_platform:
+        | "ps5"
+        | "ps4"
+        | "xbox_series"
+        | "xbox_one"
+        | "switch"
+        | "pc"
+        | "other"
+      shipping_method: "local_pickup" | "courier" | "both"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +427,18 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      game_condition: ["mint", "excellent", "good", "fair", "poor"],
+      game_platform: [
+        "ps5",
+        "ps4",
+        "xbox_series",
+        "xbox_one",
+        "switch",
+        "pc",
+        "other",
+      ],
+      shipping_method: ["local_pickup", "courier", "both"],
+    },
   },
 } as const
