@@ -3,7 +3,7 @@ import StatCard from "@/components/StatCard";
 import ItemCard from "@/components/ItemCard";
 import LiveFeed from "@/components/LiveFeed";
 import LootBox from "@/components/LootBox";
-import { Wallet, TrendingUp, Award, Zap } from "lucide-react";
+import { Wallet, TrendingUp, Award, Zap, Users, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-bg.jpg";
 import dragonLore from "@/assets/items/dragon-lore.jpg";
@@ -118,6 +118,45 @@ const Index = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column - Marketplace */}
           <div className="lg:col-span-2 space-y-6">
+            {/* Quick Links */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <a href="/hubs" className="bg-gradient-card p-4 rounded-lg border border-border hover:border-primary transition-colors group">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                    <Users className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-foreground">Game Hubs</p>
+                    <p className="text-xs text-muted-foreground">Join communities</p>
+                  </div>
+                </div>
+              </a>
+              
+              <a href="/physical-games" className="bg-gradient-card p-4 rounded-lg border border-border hover:border-primary transition-colors group">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-secondary/10 rounded-lg group-hover:bg-secondary/20 transition-colors">
+                    <Package className="h-5 w-5 text-secondary" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-foreground">Physical Games</p>
+                    <p className="text-xs text-muted-foreground">Trade discs & cartridges</p>
+                  </div>
+                </div>
+              </a>
+              
+              <a href="/auth" className="bg-gradient-card p-4 rounded-lg border border-border hover:border-primary transition-colors group">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-accent/10 rounded-lg group-hover:bg-accent/20 transition-colors">
+                    <Zap className="h-5 w-5 text-accent" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-foreground">Sign In</p>
+                    <p className="text-xs text-muted-foreground">Start trading</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+
             {/* Categories */}
             <div className="flex gap-2 overflow-x-auto pb-2">
               {["All", "CS:GO", "Valorant", "Fortnite", "FIFA", "GTA V"].map((cat) => (

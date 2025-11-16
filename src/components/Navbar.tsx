@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Gamepad2, Search, User, ShoppingCart, Bell } from "lucide-react";
+import { Gamepad2, Search, User, ShoppingCart, Bell, Users, Package } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   return (
@@ -32,6 +38,25 @@ const Navbar = () => {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Users className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  <Link to="/hubs" className="cursor-pointer">Game Hubs</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/physical-games" className="cursor-pointer">
+                    <Package className="h-4 w-4 mr-2" />
+                    Physical Games
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="h-5 w-5" />
               <span className="absolute top-1 right-1 h-2 w-2 bg-accent rounded-full animate-pulse-glow" />
@@ -41,7 +66,7 @@ const Navbar = () => {
               <ShoppingCart className="h-5 w-5" />
             </Button>
             
-            <Link to="/profile">
+            <Link to="/auth">
               <Button variant="ghost" size="icon">
                 <User className="h-5 w-5" />
               </Button>
