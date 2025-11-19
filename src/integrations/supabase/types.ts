@@ -47,6 +47,141 @@ export type Database = {
         }
         Relationships: []
       }
+      hangout_messages: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          room_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          room_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          room_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hangout_messages_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "hangout_rooms"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hangout_messages_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      hangout_participants: {
+        Row: {
+          id: string
+          is_muted: boolean | null
+          is_speaking: boolean | null
+          joined_at: string
+          last_seen: string | null
+          room_id: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          is_muted?: boolean | null
+          is_speaking?: boolean | null
+          joined_at?: string
+          last_seen?: string | null
+          room_id: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          is_muted?: boolean | null
+          is_speaking?: boolean | null
+          joined_at?: string
+          last_seen?: string | null
+          room_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hangout_participants_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "hangout_rooms"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hangout_participants_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      hangout_rooms: {
+        Row: {
+          created_at: string
+          description: string | null
+          game_title: string | null
+          host_id: string
+          hub_id: string | null
+          id: string
+          max_participants: number | null
+          name: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          game_title?: string | null
+          host_id: string
+          hub_id?: string | null
+          id?: string
+          max_participants?: number | null
+          name: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          game_title?: string | null
+          host_id?: string
+          hub_id?: string | null
+          id?: string
+          max_participants?: number | null
+          name?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hangout_rooms_host_id_fkey"
+            columns: ["host_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hangout_rooms_hub_id_fkey"
+            columns: ["hub_id"]
+            isOneToOne: false
+            referencedRelation: "game_hubs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       hub_members: {
         Row: {
           hub_id: string | null
