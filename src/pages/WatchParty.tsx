@@ -57,7 +57,7 @@ const WatchParty = () => {
         .eq("party_id", id);
       
       if (error) throw error;
-      return data;
+      return data as any;
     },
     enabled: !!id,
   });
@@ -76,7 +76,7 @@ const WatchParty = () => {
         .order("created_at", { ascending: true });
       
       if (error) throw error;
-      return data;
+      return data as any;
     },
     enabled: !!id,
   });
