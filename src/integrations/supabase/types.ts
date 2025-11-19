@@ -283,6 +283,152 @@ export type Database = {
           },
         ]
       }
+      watch_parties: {
+        Row: {
+          created_at: string
+          current_video_time: number | null
+          description: string | null
+          host_id: string
+          hub_id: string | null
+          id: string
+          is_playing: boolean | null
+          scheduled_time: string | null
+          status: string
+          title: string
+          video_url: string
+        }
+        Insert: {
+          created_at?: string
+          current_video_time?: number | null
+          description?: string | null
+          host_id: string
+          hub_id?: string | null
+          id?: string
+          is_playing?: boolean | null
+          scheduled_time?: string | null
+          status?: string
+          title: string
+          video_url: string
+        }
+        Update: {
+          created_at?: string
+          current_video_time?: number | null
+          description?: string | null
+          host_id?: string
+          hub_id?: string | null
+          id?: string
+          is_playing?: boolean | null
+          scheduled_time?: string | null
+          status?: string
+          title?: string
+          video_url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "watch_parties_hub_id_fkey"
+            columns: ["hub_id"]
+            isOneToOne: false
+            referencedRelation: "game_hubs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      watch_party_events: {
+        Row: {
+          created_at: string
+          created_by: string
+          event_type: string
+          id: string
+          party_id: string
+          video_time: number
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          event_type: string
+          id?: string
+          party_id: string
+          video_time: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          event_type?: string
+          id?: string
+          party_id?: string
+          video_time?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "watch_party_events_party_id_fkey"
+            columns: ["party_id"]
+            isOneToOne: false
+            referencedRelation: "watch_parties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      watch_party_messages: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          party_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          party_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          party_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "watch_party_messages_party_id_fkey"
+            columns: ["party_id"]
+            isOneToOne: false
+            referencedRelation: "watch_parties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      watch_party_participants: {
+        Row: {
+          id: string
+          joined_at: string
+          party_id: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          joined_at?: string
+          party_id: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          joined_at?: string
+          party_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "watch_party_participants_party_id_fkey"
+            columns: ["party_id"]
+            isOneToOne: false
+            referencedRelation: "watch_parties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

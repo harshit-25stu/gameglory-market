@@ -8,6 +8,8 @@ import Auth from "./pages/Auth";
 import Hubs from "./pages/Hubs";
 import GameHub from "./pages/GameHub";
 import PhysicalGames from "./pages/PhysicalGames";
+import WatchParties from "./pages/WatchParties";
+import WatchParty from "./pages/WatchParty";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +26,8 @@ const App = () => (
           <Route path="/hubs" element={<Hubs />} />
           <Route path="/hubs/:slug" element={<GameHub />} />
           <Route path="/physical-games" element={<PhysicalGames />} />
+          <Route path="/watch-parties" element={<WatchParties />} />
+          <Route path="/watch-party/:id" element={<WatchParty />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
