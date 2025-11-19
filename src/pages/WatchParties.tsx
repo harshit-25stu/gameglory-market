@@ -36,7 +36,10 @@ const WatchParties = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("watch_parties")
-        .select("*, profiles!watch_parties_host_id_fkey(username)")
+        .select(`
+          *,
+          host:profiles!watch_parties_host_id_fkey(username)
+        `)
         .order("created_at", { ascending: false });
       
       if (error) throw error;
@@ -195,9 +198,9 @@ const WatchParties = () => {
                   <CardContent>
                     <div className="space-y-2 text-sm text-muted-foreground">
                       <div className="flex items-center gap-2">
-                        <Users className="w-4 h-4" />
-                        <span>Hosted by {party.profiles?.username || "Unknown"}</span>
-                      </div>
+                      <Users className="w-4 h-4" />
+                      <span>Hosted by {party.host?.username || "Unknown"}</span>
+                    </div>
                       {party.scheduled_time && (
                         <div className="flex items-center gap-2">
                           <Calendar className="w-4 h-4" />

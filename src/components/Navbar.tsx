@@ -54,6 +54,9 @@ const Navbar = () => {
                     Physical Games
                   </Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/watch-parties" className="cursor-pointer">Watch Parties</Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 

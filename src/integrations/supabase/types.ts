@@ -325,6 +325,13 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "watch_parties_host_id_fkey"
+            columns: ["host_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "watch_parties_hub_id_fkey"
             columns: ["hub_id"]
             isOneToOne: false
@@ -359,6 +366,13 @@ export type Database = {
           video_time?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "watch_party_events_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "watch_party_events_party_id_fkey"
             columns: ["party_id"]
@@ -398,6 +412,13 @@ export type Database = {
             referencedRelation: "watch_parties"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "watch_party_messages_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
         ]
       }
       watch_party_participants: {
@@ -425,6 +446,13 @@ export type Database = {
             columns: ["party_id"]
             isOneToOne: false
             referencedRelation: "watch_parties"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "watch_party_participants_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]

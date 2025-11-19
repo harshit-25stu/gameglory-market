@@ -50,7 +50,10 @@ const WatchParty = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("watch_party_participants")
-        .select("*, profiles(*)")
+        .select(`
+          *,
+          profile:profiles!watch_party_participants_user_id_fkey(username)
+        `)
         .eq("party_id", id);
       
       if (error) throw error;
@@ -65,7 +68,10 @@ const WatchParty = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("watch_party_messages")
-        .select("*, profiles(*)")
+        .select(`
+          *,
+          profile:profiles!watch_party_messages_user_id_fkey(username)
+        `)
         .eq("party_id", id)
         .order("created_at", { ascending: true });
       
@@ -325,11 +331,11 @@ const WatchParty = () => {
                       <div key={participant.id} className="flex items-center gap-2">
                         <Avatar className="w-8 h-8">
                           <AvatarFallback>
-                            {participant.profiles?.username?.[0]?.toUpperCase() || "?"}
+                            {participant.profile?.username?.[0]?.toUpperCase() || "?"}
                           </AvatarFallback>
                         </Avatar>
                         <span className="text-sm">
-                          {participant.profiles?.username || "Unknown"}
+                          {participant.profile?.username || "Unknown"}
                           {participant.user_id === party.host_id && " (Host)"}
                         </span>
                       </div>
@@ -349,11 +355,11 @@ const WatchParty = () => {
                           <div className="flex items-center gap-2">
                             <Avatar className="w-6 h-6">
                               <AvatarFallback className="text-xs">
-                                {msg.profiles?.username?.[0]?.toUpperCase() || "?"}
+                                {msg.profile?.username?.[0]?.toUpperCase() || "?"}
                               </AvatarFallback>
                             </Avatar>
                             <span className="text-sm font-medium">
-                              {msg.profiles?.username || "Unknown"}
+                              {msg.profile?.username || "Unknown"}
                             </span>
                           </div>
                           <p className="text-sm text-muted-foreground ml-8">{msg.message}</p>
