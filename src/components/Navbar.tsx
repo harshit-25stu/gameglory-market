@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Gamepad2, Search, User, ShoppingCart, Bell, Users, Package } from "lucide-react";
+import { Gamepad2, Search, User, ShoppingCart, Bell, Users, Package, Mic, Video } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -55,7 +55,16 @@ const Navbar = () => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/watch-parties" className="cursor-pointer">Watch Parties</Link>
+                  <Link to="/watch-parties" className="cursor-pointer">
+                    <Video className="h-4 w-4 mr-2" />
+                    Watch Parties
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/hangouts" className="cursor-pointer">
+                    <Mic className="h-4 w-4 mr-2" />
+                    Player Hangouts
+                  </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
