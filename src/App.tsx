@@ -11,6 +11,7 @@ import PhysicalGames from "./pages/PhysicalGames";
 import WatchParties from "./pages/WatchParties";
 import WatchParty from "./pages/WatchParty";
 import Hangouts from "./pages/Hangouts";
+import HangoutRoom from "./pages/HangoutRoom";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/watch-parties" element={<WatchParties />} />
           <Route path="/watch-party/:id" element={<WatchParty />} />
           <Route path="/hangouts" element={<Hangouts />} />
+          <Route path="/hangout/:id" element={<HangoutRoom />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
