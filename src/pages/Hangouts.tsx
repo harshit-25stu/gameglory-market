@@ -313,6 +313,7 @@ const Hangouts = () => {
                 <Card
                   key={room.id}
                   className="cursor-pointer hover:border-primary transition-colors group"
+                  onClick={() => navigate(`/hangout/${room.id}`)}
                 >
                   <CardHeader>
                     <CardTitle className="flex items-start justify-between">
