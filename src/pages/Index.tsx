@@ -3,7 +3,7 @@ import StatCard from "@/components/StatCard";
 import ItemCard from "@/components/ItemCard";
 import LiveFeed from "@/components/LiveFeed";
 import LootBox from "@/components/LootBox";
-import { Wallet, TrendingUp, Award, Zap, Users, Package, Video, Mic } from "lucide-react";
+import { Wallet, TrendingUp, Award, Zap, Users, Package, Video, Mic, Sparkles, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import heroBg from "@/assets/hero-bg.jpg";
@@ -120,7 +120,43 @@ const Index = () => {
           {/* Left Column - Marketplace */}
           <div className="lg:col-span-2 space-y-6">
             {/* Quick Links */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <Link to="/marketplace" className="bg-gradient-card p-4 rounded-lg border border-border hover:border-primary transition-colors group">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                    <ShoppingCart className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-foreground">Marketplace</p>
+                    <p className="text-xs text-muted-foreground">Buy & sell</p>
+                  </div>
+                </div>
+              </Link>
+              
+              <Link to="/trade-in" className="bg-gradient-card p-4 rounded-lg border border-border hover:border-accent transition-colors group">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-accent/10 rounded-lg group-hover:bg-accent/20 transition-colors">
+                    <Sparkles className="h-5 w-5 text-accent" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-foreground">Trade-In</p>
+                    <p className="text-xs text-muted-foreground">AI pricing</p>
+                  </div>
+                </div>
+              </Link>
+              
+              <Link to="/orders" className="bg-gradient-card p-4 rounded-lg border border-border hover:border-secondary transition-colors group">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-secondary/10 rounded-lg group-hover:bg-secondary/20 transition-colors">
+                    <Package className="h-5 w-5 text-secondary" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-foreground">Orders</p>
+                    <p className="text-xs text-muted-foreground">Track delivery</p>
+                  </div>
+                </div>
+              </Link>
+              
               <Link to="/hubs" className="bg-gradient-card p-4 rounded-lg border border-border hover:border-primary transition-colors group">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
@@ -128,19 +164,7 @@ const Index = () => {
                   </div>
                   <div>
                     <p className="font-bold text-foreground">Game Hubs</p>
-                    <p className="text-xs text-muted-foreground">Join communities</p>
-                  </div>
-                </div>
-              </Link>
-              
-              <Link to="/physical-games" className="bg-gradient-card p-4 rounded-lg border border-border hover:border-primary transition-colors group">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-secondary/10 rounded-lg group-hover:bg-secondary/20 transition-colors">
-                    <Package className="h-5 w-5 text-secondary" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-foreground">Physical Games</p>
-                    <p className="text-xs text-muted-foreground">Trade discs</p>
+                    <p className="text-xs text-muted-foreground">Communities</p>
                   </div>
                 </div>
               </Link>
