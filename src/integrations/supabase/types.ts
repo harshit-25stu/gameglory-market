@@ -14,6 +14,62 @@ export type Database = {
   }
   public: {
     Tables: {
+      digital_items: {
+        Row: {
+          created_at: string
+          description: string | null
+          game_title: string | null
+          id: string
+          is_available: boolean | null
+          item_type: string
+          key_code: string | null
+          platform: Database["public"]["Enums"]["game_platform"]
+          price: number
+          seller_id: string | null
+          title: string
+          updated_at: string
+          views_count: number | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          game_title?: string | null
+          id?: string
+          is_available?: boolean | null
+          item_type: string
+          key_code?: string | null
+          platform: Database["public"]["Enums"]["game_platform"]
+          price: number
+          seller_id?: string | null
+          title: string
+          updated_at?: string
+          views_count?: number | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          game_title?: string | null
+          id?: string
+          is_available?: boolean | null
+          item_type?: string
+          key_code?: string | null
+          platform?: Database["public"]["Enums"]["game_platform"]
+          price?: number
+          seller_id?: string | null
+          title?: string
+          updated_at?: string
+          views_count?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "digital_items_seller_id_fkey"
+            columns: ["seller_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       game_hubs: {
         Row: {
           banner_url: string | null
@@ -266,6 +322,75 @@ export type Database = {
           },
         ]
       }
+      orders: {
+        Row: {
+          buyer_id: string
+          carrier: string | null
+          created_at: string
+          delivered_at: string | null
+          delivery_notes: string | null
+          id: string
+          item_id: string
+          item_type: string
+          seller_id: string
+          shipped_at: string | null
+          shipping_address: string | null
+          status: string
+          total_price: number
+          tracking_number: string | null
+          updated_at: string
+        }
+        Insert: {
+          buyer_id: string
+          carrier?: string | null
+          created_at?: string
+          delivered_at?: string | null
+          delivery_notes?: string | null
+          id?: string
+          item_id: string
+          item_type: string
+          seller_id: string
+          shipped_at?: string | null
+          shipping_address?: string | null
+          status?: string
+          total_price: number
+          tracking_number?: string | null
+          updated_at?: string
+        }
+        Update: {
+          buyer_id?: string
+          carrier?: string | null
+          created_at?: string
+          delivered_at?: string | null
+          delivery_notes?: string | null
+          id?: string
+          item_id?: string
+          item_type?: string
+          seller_id?: string
+          shipped_at?: string | null
+          shipping_address?: string | null
+          status?: string
+          total_price?: number
+          tracking_number?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_buyer_id_fkey"
+            columns: ["buyer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_seller_id_fkey"
+            columns: ["seller_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       physical_games: {
         Row: {
           condition: Database["public"]["Enums"]["game_condition"]
@@ -379,6 +504,68 @@ export type Database = {
           username?: string
         }
         Relationships: []
+      }
+      trade_ins: {
+        Row: {
+          ai_estimated_price: number | null
+          ai_price_reasoning: string | null
+          condition: Database["public"]["Enums"]["game_condition"]
+          created_at: string
+          description: string | null
+          final_price: number | null
+          game_title: string
+          id: string
+          images: string[] | null
+          includes_box: boolean | null
+          includes_manual: boolean | null
+          platform: Database["public"]["Enums"]["game_platform"]
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ai_estimated_price?: number | null
+          ai_price_reasoning?: string | null
+          condition: Database["public"]["Enums"]["game_condition"]
+          created_at?: string
+          description?: string | null
+          final_price?: number | null
+          game_title: string
+          id?: string
+          images?: string[] | null
+          includes_box?: boolean | null
+          includes_manual?: boolean | null
+          platform: Database["public"]["Enums"]["game_platform"]
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ai_estimated_price?: number | null
+          ai_price_reasoning?: string | null
+          condition?: Database["public"]["Enums"]["game_condition"]
+          created_at?: string
+          description?: string | null
+          final_price?: number | null
+          game_title?: string
+          id?: string
+          images?: string[] | null
+          includes_box?: boolean | null
+          includes_manual?: boolean | null
+          platform?: Database["public"]["Enums"]["game_platform"]
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trade_ins_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_game_libraries: {
         Row: {
