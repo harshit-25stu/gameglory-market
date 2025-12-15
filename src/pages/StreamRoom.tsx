@@ -11,6 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
 import { Send, Radio, Users, ArrowLeft, ExternalLink } from "lucide-react";
+import InteractivePanel from "@/components/InteractivePanel";
 
 interface Message {
   id: string;
@@ -217,8 +218,12 @@ const StreamRoom = () => {
         </Button>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          {/* Interactive Panel */}
+          <div className="lg:col-span-1 order-last lg:order-first">
+            <InteractivePanel streamId={id} userId={userId} isCreator={userId === stream?.host_id} />
+          </div>
           {/* Video Player */}
-          <div className="lg:col-span-3 space-y-4">
+          <div className="lg:col-span-2 space-y-4">
             <Card className="overflow-hidden">
               {embedUrl ? (
                 <div className="aspect-video">

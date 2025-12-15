@@ -3,7 +3,7 @@ import StatCard from "@/components/StatCard";
 import ItemCard from "@/components/ItemCard";
 import LiveFeed from "@/components/LiveFeed";
 import LootBox from "@/components/LootBox";
-import { Wallet, TrendingUp, Award, Zap, Users, Package, Video, Mic, Sparkles, ShoppingCart, Radio } from "lucide-react";
+import { Wallet, TrendingUp, Award, Zap, Users, Package, Video, Mic, Sparkles, ShoppingCart, Radio, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import heroBg from "@/assets/hero-bg.jpg";
@@ -201,6 +201,18 @@ const Index = () => {
                   <div>
                     <p className="font-bold text-foreground">Live Streams</p>
                     <p className="text-xs text-muted-foreground">Watch live</p>
+                  </div>
+                </div>
+              </Link>
+              
+              <Link to="/esports" className="bg-gradient-card p-4 rounded-lg border border-border hover:border-yellow-500 transition-colors group">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-yellow-500/10 rounded-lg group-hover:bg-yellow-500/20 transition-colors">
+                    <Trophy className="h-5 w-5 text-yellow-500" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-foreground">Esports</p>
+                    <p className="text-xs text-muted-foreground">Tournaments</p>
                   </div>
                 </div>
               </Link>

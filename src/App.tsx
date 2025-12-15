@@ -17,6 +17,8 @@ import Marketplace from "./pages/Marketplace";
 import Orders from "./pages/Orders";
 import LiveStreams from "./pages/LiveStreams";
 import StreamRoom from "./pages/StreamRoom";
+import EsportsEvents from "./pages/EsportsEvents";
+import EsportsEventDetail from "./pages/EsportsEventDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +44,8 @@ const App = () => (
           <Route path="/orders" element={<Orders />} />
           <Route path="/streams" element={<LiveStreams />} />
           <Route path="/streams/:id" element={<StreamRoom />} />
+          <Route path="/esports" element={<EsportsEvents />} />
+          <Route path="/esports/:id" element={<EsportsEventDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
