@@ -15,6 +15,8 @@ import HangoutRoom from "./pages/HangoutRoom";
 import TradeIn from "./pages/TradeIn";
 import Marketplace from "./pages/Marketplace";
 import Orders from "./pages/Orders";
+import LiveStreams from "./pages/LiveStreams";
+import StreamRoom from "./pages/StreamRoom";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +40,8 @@ const App = () => (
           <Route path="/trade-in" element={<TradeIn />} />
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/streams" element={<LiveStreams />} />
+          <Route path="/streams/:id" element={<StreamRoom />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
