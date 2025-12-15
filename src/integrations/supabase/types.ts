@@ -70,6 +70,125 @@ export type Database = {
           },
         ]
       }
+      esports_events: {
+        Row: {
+          created_at: string
+          created_by: string
+          description: string | null
+          end_time: string | null
+          event_type: string
+          game_title: string
+          hub_id: string | null
+          id: string
+          participant_count: number | null
+          prize_pool: string | null
+          start_time: string
+          status: string
+          stream_url: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          description?: string | null
+          end_time?: string | null
+          event_type?: string
+          game_title: string
+          hub_id?: string | null
+          id?: string
+          participant_count?: number | null
+          prize_pool?: string | null
+          start_time: string
+          status?: string
+          stream_url?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          end_time?: string | null
+          event_type?: string
+          game_title?: string
+          hub_id?: string | null
+          id?: string
+          participant_count?: number | null
+          prize_pool?: string | null
+          start_time?: string
+          status?: string
+          stream_url?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "esports_events_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "esports_events_hub_id_fkey"
+            columns: ["hub_id"]
+            isOneToOne: false
+            referencedRelation: "game_hubs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      esports_matches: {
+        Row: {
+          created_at: string
+          event_id: string
+          id: string
+          match_number: number
+          round_number: number
+          scheduled_time: string | null
+          status: string
+          team_a_name: string
+          team_a_score: number | null
+          team_b_name: string
+          team_b_score: number | null
+          winner: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          id?: string
+          match_number?: number
+          round_number?: number
+          scheduled_time?: string | null
+          status?: string
+          team_a_name: string
+          team_a_score?: number | null
+          team_b_name: string
+          team_b_score?: number | null
+          winner?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          id?: string
+          match_number?: number
+          round_number?: number
+          scheduled_time?: string | null
+          status?: string
+          team_a_name?: string
+          team_a_score?: number | null
+          team_b_name?: string
+          team_b_score?: number | null
+          winner?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "esports_matches_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "esports_events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       game_hubs: {
         Row: {
           banner_url: string | null
@@ -562,6 +681,87 @@ export type Database = {
           },
         ]
       }
+      poll_votes: {
+        Row: {
+          created_at: string
+          id: string
+          option_index: number
+          poll_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          option_index: number
+          poll_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          option_index?: number
+          poll_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "poll_votes_poll_id_fkey"
+            columns: ["poll_id"]
+            isOneToOne: false
+            referencedRelation: "stream_polls"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "poll_votes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      prediction_entries: {
+        Row: {
+          created_at: string
+          id: string
+          points_wagered: number
+          prediction_id: string
+          selected_option: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          points_wagered?: number
+          prediction_id: string
+          selected_option: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          points_wagered?: number
+          prediction_id?: string
+          selected_option?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prediction_entries_prediction_id_fkey"
+            columns: ["prediction_id"]
+            isOneToOne: false
+            referencedRelation: "stream_predictions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prediction_entries_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -603,6 +803,184 @@ export type Database = {
           username?: string
         }
         Relationships: []
+      }
+      stream_polls: {
+        Row: {
+          created_at: string
+          created_by: string
+          ends_at: string | null
+          event_id: string | null
+          id: string
+          is_active: boolean | null
+          options: Json
+          question: string
+          stream_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          ends_at?: string | null
+          event_id?: string | null
+          id?: string
+          is_active?: boolean | null
+          options?: Json
+          question: string
+          stream_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          ends_at?: string | null
+          event_id?: string | null
+          id?: string
+          is_active?: boolean | null
+          options?: Json
+          question?: string
+          stream_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stream_polls_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stream_polls_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "esports_events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stream_polls_stream_id_fkey"
+            columns: ["stream_id"]
+            isOneToOne: false
+            referencedRelation: "live_streams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      stream_predictions: {
+        Row: {
+          created_at: string
+          created_by: string
+          event_id: string | null
+          id: string
+          is_active: boolean | null
+          match_id: string | null
+          option_a: string
+          option_b: string
+          stream_id: string | null
+          title: string
+          winning_option: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          event_id?: string | null
+          id?: string
+          is_active?: boolean | null
+          match_id?: string | null
+          option_a: string
+          option_b: string
+          stream_id?: string | null
+          title: string
+          winning_option?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          event_id?: string | null
+          id?: string
+          is_active?: boolean | null
+          match_id?: string | null
+          option_a?: string
+          option_b?: string
+          stream_id?: string | null
+          title?: string
+          winning_option?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stream_predictions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stream_predictions_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "esports_events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stream_predictions_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "esports_matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stream_predictions_stream_id_fkey"
+            columns: ["stream_id"]
+            isOneToOne: false
+            referencedRelation: "live_streams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      stream_reactions: {
+        Row: {
+          created_at: string
+          event_id: string | null
+          id: string
+          reaction_type: string
+          stream_id: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_id?: string | null
+          id?: string
+          reaction_type: string
+          stream_id?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          event_id?: string | null
+          id?: string
+          reaction_type?: string
+          stream_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "stream_reactions_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "esports_events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stream_reactions_stream_id_fkey"
+            columns: ["stream_id"]
+            isOneToOne: false
+            referencedRelation: "live_streams"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "stream_reactions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       trade_ins: {
         Row: {
