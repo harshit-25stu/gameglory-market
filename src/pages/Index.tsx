@@ -121,6 +121,18 @@ const Index = () => {
           <div className="lg:col-span-2 space-y-6">
             {/* Quick Links */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <Link to="/games" className="bg-gradient-card p-4 rounded-lg border border-primary/30 hover:border-primary transition-colors group">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-primary/20 rounded-lg group-hover:bg-primary/30 transition-colors">
+                    <Sparkles className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-foreground">Game Skins</p>
+                    <p className="text-xs text-muted-foreground">All games</p>
+                  </div>
+                </div>
+              </Link>
+              
               <Link to="/marketplace" className="bg-gradient-card p-4 rounded-lg border border-border hover:border-primary transition-colors group">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">

@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Gamepad2, Search, User, ShoppingCart, Bell, Users, Package, Mic, Video } from "lucide-react";
+import { Gamepad2, Search, User, ShoppingCart, Bell, Users, Package, Mic, Video, Wallet, Sparkles } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
@@ -38,21 +39,35 @@ const Navbar = () => {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
+            {/* Browse Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Users className="h-5 w-5" />
+                <Button variant="ghost" className="hidden sm:flex">
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  Browse
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuItem asChild>
-                  <Link to="/hubs" className="cursor-pointer">Game Hubs</Link>
+                  <Link to="/games" className="cursor-pointer font-medium">
+                    🎮 Game Skins
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/marketplace" className="cursor-pointer">
+                    <ShoppingCart className="h-4 w-4 mr-2" />
+                    Marketplace
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link to="/physical-games" className="cursor-pointer">
                     <Package className="h-4 w-4 mr-2" />
                     Physical Games
                   </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/hubs" className="cursor-pointer">Game Hubs</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link to="/watch-parties" className="cursor-pointer">
@@ -77,16 +92,47 @@ const Navbar = () => {
             <Button variant="ghost" size="icon">
               <ShoppingCart className="h-5 w-5" />
             </Button>
+
+            {/* User Menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <User className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  <Link to="/profile" className="cursor-pointer">
+                    <User className="h-4 w-4 mr-2" />
+                    My Profile
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/profile" className="cursor-pointer">
+                    <Wallet className="h-4 w-4 mr-2" />
+                    Wallet
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/orders" className="cursor-pointer">
+                    <Package className="h-4 w-4 mr-2" />
+                    My Orders
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/auth" className="cursor-pointer">
+                    Sign In / Sign Up
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             
-            <Link to="/auth">
-              <Button variant="ghost" size="icon">
-                <User className="h-5 w-5" />
+            <Link to="/games">
+              <Button className="bg-gradient-primary hover:opacity-90 transition-opacity">
+                Sell Skins
               </Button>
             </Link>
-            
-            <Button className="bg-gradient-primary hover:opacity-90 transition-opacity">
-              Sell Items
-            </Button>
           </div>
         </div>
       </div>
