@@ -222,6 +222,54 @@ export type Database = {
         }
         Relationships: []
       }
+      game_skins: {
+        Row: {
+          condition: string
+          created_at: string
+          description: string | null
+          game: string
+          id: string
+          image_url: string | null
+          is_available: boolean | null
+          price: number
+          rarity: string
+          seller_id: string
+          title: string
+          updated_at: string
+          views_count: number | null
+        }
+        Insert: {
+          condition?: string
+          created_at?: string
+          description?: string | null
+          game: string
+          id?: string
+          image_url?: string | null
+          is_available?: boolean | null
+          price: number
+          rarity?: string
+          seller_id: string
+          title: string
+          updated_at?: string
+          views_count?: number | null
+        }
+        Update: {
+          condition?: string
+          created_at?: string
+          description?: string | null
+          game?: string
+          id?: string
+          image_url?: string | null
+          is_available?: boolean | null
+          price?: number
+          rarity?: string
+          seller_id?: string
+          title?: string
+          updated_at?: string
+          views_count?: number | null
+        }
+        Relationships: []
+      }
       hangout_messages: {
         Row: {
           created_at: string
@@ -775,6 +823,7 @@ export type Database = {
           trader_xp: number | null
           updated_at: string | null
           username: string
+          wallet_balance: number | null
         }
         Insert: {
           avatar_url?: string | null
@@ -788,6 +837,7 @@ export type Database = {
           trader_xp?: number | null
           updated_at?: string | null
           username: string
+          wallet_balance?: number | null
         }
         Update: {
           avatar_url?: string | null
@@ -801,8 +851,47 @@ export type Database = {
           trader_xp?: number | null
           updated_at?: string | null
           username?: string
+          wallet_balance?: number | null
         }
         Relationships: []
+      }
+      seller_ratings: {
+        Row: {
+          buyer_id: string
+          created_at: string
+          id: string
+          order_id: string | null
+          rating: number
+          review: string | null
+          seller_id: string
+        }
+        Insert: {
+          buyer_id: string
+          created_at?: string
+          id?: string
+          order_id?: string | null
+          rating: number
+          review?: string | null
+          seller_id: string
+        }
+        Update: {
+          buyer_id?: string
+          created_at?: string
+          id?: string
+          order_id?: string | null
+          rating?: number
+          review?: string | null
+          seller_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seller_ratings_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       stream_polls: {
         Row: {
@@ -1081,6 +1170,71 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_inventory: {
+        Row: {
+          acquired_at: string
+          acquisition_type: string
+          id: string
+          skin_id: string | null
+          user_id: string
+        }
+        Insert: {
+          acquired_at?: string
+          acquisition_type?: string
+          id?: string
+          skin_id?: string | null
+          user_id: string
+        }
+        Update: {
+          acquired_at?: string
+          acquisition_type?: string
+          id?: string
+          skin_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_inventory_skin_id_fkey"
+            columns: ["skin_id"]
+            isOneToOne: false
+            referencedRelation: "game_skins"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      wallet_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string | null
+          id: string
+          reference_id: string | null
+          status: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          reference_id?: string | null
+          status?: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          reference_id?: string | null
+          status?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       watch_parties: {
         Row: {
