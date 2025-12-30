@@ -25,7 +25,7 @@ export type Database = {
           key_code: string | null
           platform: Database["public"]["Enums"]["game_platform"]
           price: number
-          seller_id: string | null
+          seller_id: string
           title: string
           updated_at: string
           views_count: number | null
@@ -40,7 +40,7 @@ export type Database = {
           key_code?: string | null
           platform: Database["public"]["Enums"]["game_platform"]
           price: number
-          seller_id?: string | null
+          seller_id: string
           title: string
           updated_at?: string
           views_count?: number | null
@@ -55,7 +55,7 @@ export type Database = {
           key_code?: string | null
           platform?: Database["public"]["Enums"]["game_platform"]
           price?: number
-          seller_id?: string | null
+          seller_id?: string
           title?: string
           updated_at?: string
           views_count?: number | null
@@ -362,19 +362,19 @@ export type Database = {
           hub_id: string | null
           id: string
           joined_at: string | null
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           hub_id?: string | null
           id?: string
           joined_at?: string | null
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           hub_id?: string | null
           id?: string
           joined_at?: string | null
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: [
           {
@@ -402,7 +402,7 @@ export type Database = {
           id: string
           image_url: string | null
           likes_count: number | null
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           comments_count?: number | null
@@ -412,7 +412,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           likes_count?: number | null
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           comments_count?: number | null
@@ -422,7 +422,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           likes_count?: number | null
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: [
           {
@@ -623,7 +623,7 @@ export type Database = {
           location: string | null
           platform: Database["public"]["Enums"]["game_platform"]
           price: number
-          seller_id: string | null
+          seller_id: string
           shipping_method: Database["public"]["Enums"]["shipping_method"] | null
           title: string
           updated_at: string | null
@@ -642,7 +642,7 @@ export type Database = {
           location?: string | null
           platform: Database["public"]["Enums"]["game_platform"]
           price: number
-          seller_id?: string | null
+          seller_id: string
           shipping_method?:
             | Database["public"]["Enums"]["shipping_method"]
             | null
@@ -663,7 +663,7 @@ export type Database = {
           location?: string | null
           platform?: Database["public"]["Enums"]["game_platform"]
           price?: number
-          seller_id?: string | null
+          seller_id?: string
           shipping_method?:
             | Database["public"]["Enums"]["shipping_method"]
             | null
@@ -1052,7 +1052,7 @@ export type Database = {
           game_title: string
           id: string
           platform: Database["public"]["Enums"]["game_platform"]
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           added_at?: string | null
@@ -1061,7 +1061,7 @@ export type Database = {
           game_title: string
           id?: string
           platform: Database["public"]["Enums"]["game_platform"]
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           added_at?: string | null
@@ -1070,7 +1070,7 @@ export type Database = {
           game_title?: string
           id?: string
           platform?: Database["public"]["Enums"]["game_platform"]
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: [
           {
