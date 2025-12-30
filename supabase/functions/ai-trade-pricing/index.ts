@@ -1,17 +1,79 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+// Allowed origins for CORS - restrict to your domains
+const ALLOWED_ORIGINS = [
+  'https://rxhtoxgezhqloooogbqd.lovable.app',
+  'http://localhost:5173',
+  'http://localhost:3000',
+];
+
+const getCorsHeaders = (origin: string | null) => {
+  const isAllowed = origin && ALLOWED_ORIGINS.some(allowed => 
+    origin === allowed || origin.endsWith('.lovable.app')
+  );
+  return {
+    'Access-Control-Allow-Origin': isAllowed ? origin : ALLOWED_ORIGINS[0],
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  };
+};
+
+// Input validation for pricing request
+const validatePricingRequest = (body: unknown): body is {
+  gameTitle: string;
+  platform: string;
+  condition: string;
+  includesBox: boolean;
+  includesManual: boolean;
+  description?: string;
+} => {
+  if (!body || typeof body !== 'object') return false;
+  const b = body as Record<string, unknown>;
+  
+  return (
+    typeof b.gameTitle === 'string' && b.gameTitle.length > 0 && b.gameTitle.length <= 200 &&
+    ['ps5', 'ps4', 'xbox_series', 'xbox_one', 'switch', 'pc', 'other'].includes(b.platform as string) &&
+    ['mint', 'excellent', 'good', 'fair', 'poor'].includes(b.condition as string) &&
+    typeof b.includesBox === 'boolean' &&
+    typeof b.includesManual === 'boolean' &&
+    (!b.description || (typeof b.description === 'string' && b.description.length <= 500))
+  );
 };
 
 serve(async (req) => {
+  const origin = req.headers.get('origin');
+  const corsHeaders = getCorsHeaders(origin);
+
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Validate origin for non-preflight requests
+  const isAllowedOrigin = origin && ALLOWED_ORIGINS.some(allowed => 
+    origin === allowed || origin.endsWith('.lovable.app')
+  );
+  
+  if (!isAllowedOrigin && origin) {
+    console.error('Origin not allowed:', origin);
+    return new Response(JSON.stringify({ error: 'Origin not allowed' }), {
+      status: 403,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  }
+
   try {
-    const { gameTitle, platform, condition, includesBox, includesManual, description } = await req.json();
+    const body = await req.json();
+    
+    // Validate request body
+    if (!validatePricingRequest(body)) {
+      console.error('Invalid request body:', body);
+      return new Response(JSON.stringify({ error: 'Invalid request parameters' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const { gameTitle, platform, condition, includesBox, includesManual, description } = body;
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -152,7 +214,7 @@ ${description ? `- Additional Notes: ${description}` : ''}`;
   } catch (error) {
     console.error("Error in ai-trade-pricing:", error);
     return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : "Unknown error" 
+      error: "An error occurred processing your request" 
     }), {
       status: 500,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
