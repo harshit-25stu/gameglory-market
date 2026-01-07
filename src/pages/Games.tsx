@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Gamepad2, Users, TrendingUp, Star } from "lucide-react";
 
 interface GameCardProps {
@@ -49,6 +51,11 @@ const GameCard = ({ id, name, logo, gradient, itemCount, popularSkins, activeOff
                 {skin}
               </Badge>
             ))}
+            {popularSkins.length > 3 && (
+              <Badge variant="secondary" className="text-xs">
+                +{popularSkins.length - 3} more
+              </Badge>
+            )}
           </div>
         </div>
         
@@ -63,6 +70,17 @@ const GameCard = ({ id, name, logo, gradient, itemCount, popularSkins, activeOff
 };
 
 const Games = () => {
+  const [activeFilter, setActiveFilter] = useState<string>("all");
+  
+  const filters = [
+    { id: "all", label: "All" },
+    { id: "csgo", label: "CS:GO" },
+    { id: "valorant", label: "Valorant" },
+    { id: "fortnite", label: "Fortnite" },
+    { id: "fifa", label: "FIFA" },
+    { id: "gtav", label: "GTA" },
+  ];
+
   const games: GameCardProps[] = [
     {
       id: "valorant",
@@ -109,7 +127,20 @@ const Games = () => {
       popularSkins: ["Heist Crew Outfit", "Impotent Rage", "Space Interloper", "Alien Bodysuit", "SWAT Tactical"],
       activeOffers: 18,
     },
+    {
+      id: "fifa",
+      name: "FIFA / EA FC",
+      logo: "⚽",
+      gradient: "bg-gradient-to-br from-emerald-500/20 via-emerald-600/10 to-background",
+      itemCount: 124,
+      popularSkins: ["TOTY Mbappe", "Prime R9", "TOTS Messi", "Icon Pele", "Futties Card"],
+      activeOffers: 37,
+    },
   ];
+
+  const filteredGames = activeFilter === "all" 
+    ? games 
+    : games.filter(game => game.id === activeFilter);
 
   return (
     <>
@@ -126,27 +157,41 @@ const Games = () => {
             </p>
           </div>
 
+          {/* Filter Buttons */}
+          <div className="flex flex-wrap justify-center gap-2 mb-10">
+            {filters.map((filter) => (
+              <Button
+                key={filter.id}
+                variant={activeFilter === filter.id ? "default" : "outline"}
+                onClick={() => setActiveFilter(filter.id)}
+                className="min-w-[80px]"
+              >
+                {filter.label}
+              </Button>
+            ))}
+          </div>
+
           {/* Stats Bar */}
           <div className="flex justify-center gap-8 mb-10">
             <div className="text-center">
-              <p className="text-3xl font-bold text-primary">808+</p>
+              <p className="text-3xl font-bold text-primary">932+</p>
               <p className="text-sm text-muted-foreground">Total Items</p>
             </div>
             <div className="h-12 w-px bg-border" />
             <div className="text-center">
-              <p className="text-3xl font-bold text-accent">236</p>
+              <p className="text-3xl font-bold text-accent">273</p>
               <p className="text-sm text-muted-foreground">Active Offers</p>
             </div>
             <div className="h-12 w-px bg-border" />
             <div className="text-center">
-              <p className="text-3xl font-bold text-secondary">5</p>
+              <p className="text-3xl font-bold text-secondary">6</p>
               <p className="text-sm text-muted-foreground">Games</p>
             </div>
           </div>
 
           {/* Games Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {games.map((game) => (
+            {filteredGames.map((game) => (
               <GameCard key={game.id} {...game} />
             ))}
           </div>
