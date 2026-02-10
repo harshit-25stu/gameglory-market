@@ -18,7 +18,7 @@ const mockTrades: Trade[] = [
 
 const LiveFeed = () => {
   return (
-    <div className="bg-gradient-card border border-border rounded-lg p-4">
+    <div className="glass neon-border-primary rounded-lg p-4">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
           <span className="relative flex h-3 w-3">
@@ -27,7 +27,7 @@ const LiveFeed = () => {
           </span>
           Live Trades
         </h2>
-        <button className="text-sm text-primary hover:text-primary-glow transition-colors flex items-center gap-1">
+        <button className="text-sm text-primary hover:text-primary-glow transition-colors flex items-center gap-1 click-scale">
           View All <ArrowRight className="h-3 w-3" />
         </button>
       </div>
@@ -36,7 +36,7 @@ const LiveFeed = () => {
         {mockTrades.map((trade, index) => (
           <div 
             key={trade.id}
-            className="flex items-center justify-between p-3 bg-background/50 rounded-lg hover:bg-card-hover transition-colors animate-slide-up"
+            className="flex items-center justify-between p-3 bg-background/30 rounded-lg hover:bg-card-hover transition-all card-lift animate-slide-up cursor-default"
             style={{ animationDelay: `${index * 0.1}s` }}
           >
             <div className="flex-1">

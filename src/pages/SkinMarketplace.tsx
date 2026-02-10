@@ -117,7 +117,7 @@ const SkinMarketplace = () => {
     <>
       <Navbar />
       <div className="min-h-screen bg-background pt-20">
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 page-enter">
           {/* Header */}
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
             <div>
@@ -229,7 +229,7 @@ const SkinMarketplace = () => {
 
           {/* Advanced Filters */}
           {showFilters && (
-            <Card className="mb-6">
+            <Card className="mb-6 glass">
               <CardContent className="p-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
@@ -252,24 +252,25 @@ const SkinMarketplace = () => {
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {[1, 2, 3, 4].map((i) => (
-                <Card key={i} className="animate-pulse">
-                  <div className="aspect-video bg-muted" />
-                  <CardContent className="p-4 space-y-2">
-                    <div className="h-4 bg-muted rounded w-3/4" />
-                    <div className="h-4 bg-muted rounded w-1/2" />
+                <Card key={i} className="glass overflow-hidden">
+                  <div className="aspect-video skeleton-glow" />
+                  <CardContent className="p-4 space-y-3">
+                    <div className="h-4 skeleton-glow w-3/4" />
+                    <div className="h-3 skeleton-glow w-1/2" />
+                    <div className="h-6 skeleton-glow w-1/3 mt-2" />
                   </CardContent>
                 </Card>
               ))}
             </div>
           ) : filteredSkins.length === 0 ? (
-            <Card className="py-16">
-              <CardContent className="text-center">
-                <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-muted-foreground opacity-30" />
-                <h3 className="text-xl font-semibold mb-2">No skins found</h3>
+            <Card className="py-16 glass">
+              <CardContent className="empty-state">
+                <ShoppingCart className="w-20 h-20 empty-state-icon text-primary" />
+                <h3 className="text-xl font-semibold mb-2">No loot here… yet 🎮</h3>
                 <p className="text-muted-foreground mb-4">
-                  Try adjusting your filters or be the first to list a skin!
+                  Try adjusting your filters or be the first to drop some fire skins!
                 </p>
-                <Button className="bg-gradient-primary">List Your Skin</Button>
+                <Button className="bg-gradient-primary btn-glow btn-pulse click-scale">List Your Skin</Button>
               </CardContent>
             </Card>
           ) : (
@@ -283,7 +284,7 @@ const SkinMarketplace = () => {
                 return viewMode === "grid" ? (
                   <Card 
                     key={skin.id}
-                    className="group cursor-pointer overflow-hidden hover:border-primary/50 transition-all"
+                    className="group cursor-pointer overflow-hidden glass card-lift click-scale hover:border-primary/50 transition-all"
                     onClick={() => navigate(`/skins/${skin.id}`)}
                   >
                     {/* Image */}
@@ -350,7 +351,7 @@ const SkinMarketplace = () => {
                 ) : (
                   <Card 
                     key={skin.id}
-                    className="cursor-pointer hover:border-primary/50 transition-all"
+                    className="cursor-pointer glass card-lift click-scale hover:border-primary/50 transition-all"
                     onClick={() => navigate(`/skins/${skin.id}`)}
                   >
                     <CardContent className="p-4 flex gap-4">
