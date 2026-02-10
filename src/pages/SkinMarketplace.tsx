@@ -263,14 +263,14 @@ const SkinMarketplace = () => {
               ))}
             </div>
           ) : filteredSkins.length === 0 ? (
-            <Card className="py-16">
-              <CardContent className="text-center">
-                <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-muted-foreground opacity-30" />
-                <h3 className="text-xl font-semibold mb-2">No skins found</h3>
+            <Card className="py-16 glass">
+              <CardContent className="empty-state">
+                <ShoppingCart className="w-20 h-20 empty-state-icon text-primary" />
+                <h3 className="text-xl font-semibold mb-2">No loot here… yet 🎮</h3>
                 <p className="text-muted-foreground mb-4">
-                  Try adjusting your filters or be the first to list a skin!
+                  Try adjusting your filters or be the first to drop some fire skins!
                 </p>
-                <Button className="bg-gradient-primary">List Your Skin</Button>
+                <Button className="bg-gradient-primary btn-glow btn-pulse click-scale">List Your Skin</Button>
               </CardContent>
             </Card>
           ) : (
