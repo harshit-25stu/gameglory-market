@@ -10,25 +10,11 @@ interface ItemCardProps {
   trending?: boolean;
 }
 
-const rarityColors = {
-  common: "border-muted-foreground",
-  rare: "border-primary",
-  epic: "border-secondary",
-  legendary: "border-accent",
-};
-
-const rarityGlows = {
-  common: "",
-  rare: "shadow-glow-primary",
-  epic: "shadow-glow-secondary",
-  legendary: "shadow-[0_0_20px_hsl(330_100%_60%/0.5)]",
-};
-
 const ItemCard = ({ title, game, price, image, rarity = "common", trending }: ItemCardProps) => {
   return (
-    <div className={`group relative bg-gradient-card rounded-lg border-2 ${rarityColors[rarity]} ${rarityGlows[rarity]} overflow-hidden hover:scale-105 transition-all duration-300 cursor-pointer`}>
+    <div className={`group relative glass rounded-lg border-2 overflow-hidden card-lift click-scale cursor-pointer rarity-${rarity}`}>
       {trending && (
-        <div className="absolute top-2 right-2 z-10 px-2 py-1 bg-accent/90 rounded-full flex items-center gap-1 text-xs font-bold">
+        <div className="absolute top-2 right-2 z-10 px-2 py-1 bg-accent/90 rounded-full flex items-center gap-1 text-xs font-bold text-accent-foreground shadow-glow-accent">
           <TrendingUp className="h-3 w-3" />
           HOT
         </div>
@@ -54,14 +40,14 @@ const ItemCard = ({ title, game, price, image, rarity = "common", trending }: It
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs text-muted-foreground">Price</p>
-            <p className="text-xl font-bold text-success">₹{price.toLocaleString()}</p>
+            <p className="text-xl font-bold text-success text-glow-primary">₹{price.toLocaleString()}</p>
           </div>
           
           <div className="flex gap-2">
-            <Button variant="ghost" size="icon" className="hover:text-accent">
+            <Button variant="ghost" size="icon" className="hover:text-accent icon-hover click-scale">
               <Heart className="h-4 w-4" />
             </Button>
-            <Button size="sm" className="bg-gradient-primary hover:opacity-90">
+            <Button size="sm" className="bg-gradient-primary hover:opacity-90 btn-glow click-scale">
               Buy Now
             </Button>
           </div>

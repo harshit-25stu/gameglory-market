@@ -27,10 +27,13 @@ const LootBox = () => {
   };
 
   return (
-    <div className="relative bg-gradient-to-br from-accent/20 to-secondary/20 border-2 border-accent rounded-lg p-6 overflow-hidden group">
+    <div className="relative glass neon-border-accent rounded-lg p-6 overflow-hidden group">
       {/* Animated background effect */}
       <div className="absolute inset-0 bg-gradient-to-r from-accent/0 via-accent/10 to-accent/0 animate-shimmer" 
            style={{ backgroundSize: "200% 100%" }} />
+      
+      {/* Spinning glow ring */}
+      <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-accent/5 blur-3xl animate-spin-slow" />
       
       <div className="relative z-10 text-center space-y-4">
         <div className="inline-block relative">
@@ -39,19 +42,17 @@ const LootBox = () => {
         </div>
         
         <div>
-          <h3 className="text-xl font-bold text-foreground mb-1">Daily Loot Drop</h3>
+          <h3 className="text-xl font-bold text-foreground mb-1 text-glow-accent">Daily Loot Drop</h3>
           <p className="text-sm text-muted-foreground">Open your free reward!</p>
         </div>
         
         <Button 
           onClick={openLootBox}
           disabled={isOpening}
-          className="w-full bg-gradient-primary hover:opacity-90 font-bold text-base"
+          className="w-full bg-gradient-primary hover:opacity-90 font-bold text-base btn-glow btn-pulse click-scale"
         >
           {isOpening ? (
-            <>
-              <span className="animate-pulse">Opening...</span>
-            </>
+            <span className="animate-pulse">Opening...</span>
           ) : (
             "Open Loot Box"
           )}
