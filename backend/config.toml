@@ -1,0 +1,7 @@
+project_id = "rxhtoxgezhqloooogbqd"
+
+[functions.realtime-session]
+verify_jwt = false
+
+[functions.ai-trade-pricing]
+verify_jwt = false
