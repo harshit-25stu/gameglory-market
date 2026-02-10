@@ -35,64 +35,7 @@ const Navbar = () => {
             </span>
           </Link>
           </div>
-          {/* Search */}
-          <div className="hidden md:flex flex-1 max-w-md mx-8">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <input
-                type="text"
-                placeholder="Search items, games, players..."
-                className="w-full pl-10 pr-4 py-2 bg-card border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all"
-              />
-            </div>
-          </div>
 
-          {/* Actions */}
-          <div className="flex items-center gap-2">
-            {/* Browse Menu */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="hidden sm:flex">
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  Browse
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem asChild>
-                  <Link to="/games" className="cursor-pointer font-medium">
-                    🎮 Game Skins
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/marketplace" className="cursor-pointer">
-                    <ShoppingCart className="h-4 w-4 mr-2" />
-                    Marketplace
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/physical-games" className="cursor-pointer">
-                    <Package className="h-4 w-4 mr-2" />
-                    Physical Games
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link to="/hubs" className="cursor-pointer">Game Hubs</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/watch-parties" className="cursor-pointer">
-                    <Video className="h-4 w-4 mr-2" />
-                    Watch Parties
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/hangouts" className="cursor-pointer">
-                    <Mic className="h-4 w-4 mr-2" />
-                    Player Hangouts
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
 
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="h-5 w-5" />
