@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Gamepad2, Search, User, ShoppingCart, Bell, Users, Package, Mic, Video, Wallet, Sparkles } from "lucide-react";
+import { Gamepad2, Search, User, ShoppingCart, Bell, Users, Package, Mic, Video, Wallet, Sparkles, ArrowLeft } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
