@@ -34,7 +34,7 @@ const Navbar = () => {
               PlayHub
             </span>
           </Link>
-
+          </div>
           {/* Search */}
           <div className="hidden md:flex flex-1 max-w-md mx-8">
             <div className="relative w-full">
