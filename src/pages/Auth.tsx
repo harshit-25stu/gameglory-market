@@ -57,7 +57,7 @@ const Auth = () => {
         title: "Welcome to PlayHub!",
         description: "Your account has been created successfully",
       });
-      navigate("/");
+      navigate("/dashboard");
     } catch (error: any) {
       toast({
         title: "Sign up failed",
