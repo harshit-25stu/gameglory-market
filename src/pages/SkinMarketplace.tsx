@@ -284,7 +284,7 @@ const SkinMarketplace = () => {
                 return viewMode === "grid" ? (
                   <Card 
                     key={skin.id}
-                    className="group cursor-pointer overflow-hidden hover:border-primary/50 transition-all"
+                    className="group cursor-pointer overflow-hidden glass card-lift click-scale hover:border-primary/50 transition-all"
                     onClick={() => navigate(`/skins/${skin.id}`)}
                   >
                     {/* Image */}
