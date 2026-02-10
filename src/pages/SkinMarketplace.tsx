@@ -351,7 +351,7 @@ const SkinMarketplace = () => {
                 ) : (
                   <Card 
                     key={skin.id}
-                    className="cursor-pointer hover:border-primary/50 transition-all"
+                    className="cursor-pointer glass card-lift click-scale hover:border-primary/50 transition-all"
                     onClick={() => navigate(`/skins/${skin.id}`)}
                   >
                     <CardContent className="p-4 flex gap-4">
