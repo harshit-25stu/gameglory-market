@@ -229,7 +229,7 @@ const SkinMarketplace = () => {
 
           {/* Advanced Filters */}
           {showFilters && (
-            <Card className="mb-6">
+            <Card className="mb-6 glass">
               <CardContent className="p-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
