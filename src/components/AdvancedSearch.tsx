@@ -95,7 +95,7 @@ export const AdvancedSearch = () => {
 
         // Apply filters
         if (filters.platforms.length > 0) {
-          searchQuery = searchQuery.in('platform', filters.platforms);
+          searchQuery = searchQuery.in('platform', filters.platforms as any);
         }
 
         if (filters.priceRange[0] > 0 || filters.priceRange[1] < 1000) {

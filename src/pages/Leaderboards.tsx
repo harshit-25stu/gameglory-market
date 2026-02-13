@@ -65,8 +65,8 @@ const Leaderboards = () => {
     queryKey: ['leaderboards'],
     queryFn: async () => {
       const [leaderboardsRes, entriesRes] = await Promise.all([
-        supabase.from('leaderboards').select('*').eq('is_active', true),
-        supabase.from('leaderboard_entries')
+        (supabase as any).from('leaderboards').select('*').eq('is_active', true),
+        (supabase as any).from('leaderboard_entries')
           .select(`
             *,
             profiles:user_id (
@@ -92,11 +92,11 @@ const Leaderboards = () => {
     queryFn: async () => {
       if (!userId) return null;
 
-      const { data, error } = await supabase.rpc('check_achievement_progress', {
+      const { data, error } = await (supabase as any).rpc('check_achievement_progress', {
         p_user_id: userId
       });
 
-      return data as Achievement[];
+      return (data || []) as Achievement[];
     },
     enabled: !!userId,
   });
@@ -107,7 +107,7 @@ const Leaderboards = () => {
     queryFn: async () => {
       if (!userId) return null;
 
-      const { data } = await supabase
+      const { data } = await (supabase as any)
         .from('user_levels')
         .select('*')
         .eq('user_id', userId)

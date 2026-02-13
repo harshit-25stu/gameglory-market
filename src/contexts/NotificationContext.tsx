@@ -67,7 +67,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
     queryFn: async () => {
       if (!userId) return [];
 
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('notifications')
         .select('*')
         .eq('user_id', userId)
@@ -75,7 +75,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({ chil
         .limit(50);
 
       if (error) throw error;
-      return data as Notification[];
+      return (data || []) as Notification[];
     },
     enabled: !!userId,
     staleTime: 30 * 1000, // 30 seconds

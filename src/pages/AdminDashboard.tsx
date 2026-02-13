@@ -63,12 +63,12 @@ const AdminDashboard = () => {
       ] = await Promise.all([
         supabase.from('profiles').select('*', { count: 'exact', head: true }),
         supabase.from('orders').select('*', { count: 'exact', head: true }),
-        supabase.from('payment_disputes').select('*', { count: 'exact', head: true }).eq('status', 'open'),
-        supabase.from('payments').select('*', { count: 'exact', head: true }).eq('status', 'succeeded'),
-        supabase.from('payments').select('amount').eq('status', 'succeeded')
+        (supabase as any).from('payment_disputes').select('*', { count: 'exact', head: true }).eq('status', 'open'),
+        (supabase as any).from('payments').select('*', { count: 'exact', head: true }).eq('status', 'succeeded'),
+        (supabase as any).from('payments').select('amount').eq('status', 'succeeded')
       ]);
 
-      const totalRevenue = paymentsRes.data?.reduce((sum, p) => sum + p.amount, 0) || 0;
+      const totalRevenue = (paymentsRes as any).data?.reduce((sum: number, p: any) => sum + p.amount, 0) || 0;
 
       return {
         totalUsers: usersRes.count || 0,
@@ -105,7 +105,7 @@ const AdminDashboard = () => {
   const { data: openDisputes } = useQuery({
     queryKey: ['admin-open-disputes'],
     queryFn: async () => {
-      const { data } = await supabase
+      const { data } = await (supabase as any)
         .from('payment_disputes')
         .select(`
           *,
@@ -196,7 +196,7 @@ const AdminDashboard = () => {
   const { data: pendingPayouts } = useQuery({
     queryKey: ['admin-pending-payouts'],
     queryFn: async () => {
-      const { data } = await supabase
+      const { data } = await (supabase as any)
         .from('payout_requests')
         .select(`
           *,
