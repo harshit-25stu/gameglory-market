@@ -651,6 +651,48 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          created_at: string
+          data: Json | null
+          expires_at: string | null
+          id: string
+          is_read: boolean | null
+          message: string
+          priority: string
+          title: string
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          data?: Json | null
+          expires_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          message: string
+          priority?: string
+          title: string
+          type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json | null
+          expires_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          message?: string
+          priority?: string
+          title?: string
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       orders: {
         Row: {
           buyer_id: string
