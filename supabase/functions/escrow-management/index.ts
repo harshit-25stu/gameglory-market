@@ -145,7 +145,21 @@ serve(async (req) => {
       case 'resolve_dispute': {
         const { disputeId, resolution, resolutionAmount, adminNotes, resolvedBy } = payload;
 
-        // Only admins can resolve disputes (for now, allow any user)
+        // Verify the caller is an admin
+        if (!resolvedBy) {
+          throw new Error('Authentication required');
+        }
+        const { data: isAdminUser } = await supabase.rpc('has_role', {
+          _user_id: resolvedBy,
+          _role: 'admin'
+        });
+        if (!isAdminUser) {
+          return new Response(JSON.stringify({ error: 'Admin access required' }), {
+            status: 403,
+            headers: corsHeaders
+          });
+        }
+
         const { data: dispute, error: disputeError } = await supabase
           .from('payment_disputes')
           .select('*, escrow_accounts(*)')

@@ -44,9 +44,12 @@ const AdminDashboard = () => {
 
       setUserId(session.user.id);
 
-      // Check if user is admin (you would have an admin role system)
-      // For now, we'll assume admin access
-      setIsAdmin(true);
+      // Check admin role from database
+      const { data: hasAdmin } = await supabase.rpc('has_role', {
+        _user_id: session.user.id,
+        _role: 'admin'
+      });
+      setIsAdmin(!!hasAdmin);
     });
   }, []);
 

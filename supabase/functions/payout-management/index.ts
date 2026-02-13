@@ -108,6 +108,21 @@ serve(async (req) => {
       case 'process_payout': {
         const { payoutRequestId, adminUserId } = payload;
 
+        // Verify the caller is an admin
+        if (!adminUserId) {
+          throw new Error('Authentication required');
+        }
+        const { data: isAdminUser } = await supabase.rpc('has_role', {
+          _user_id: adminUserId,
+          _role: 'admin'
+        });
+        if (!isAdminUser) {
+          return new Response(JSON.stringify({ error: 'Admin access required' }), {
+            status: 403,
+            headers: corsHeaders
+          });
+        }
+
         // Get payout request
         const { data: payoutRequest, error: requestError } = await supabase
           .from('payout_requests')
