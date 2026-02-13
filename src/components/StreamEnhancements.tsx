@@ -77,7 +77,7 @@ export const StreamEnhancements = ({ streamId, isStreamer = false }: {
   const { data: messages, refetch: refetchMessages } = useQuery({
     queryKey: ['stream-messages', streamId],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('live_stream_messages')
         .select(`
           *,
@@ -92,7 +92,7 @@ export const StreamEnhancements = ({ streamId, isStreamer = false }: {
         .limit(50);
 
       if (error) throw error;
-      return data.reverse() as StreamMessage[];
+      return (data || []).reverse() as StreamMessage[];
     },
   });
 
@@ -100,7 +100,7 @@ export const StreamEnhancements = ({ streamId, isStreamer = false }: {
   const { data: activeFeatures, refetch: refetchFeatures } = useQuery({
     queryKey: ['stream-features', streamId],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('stream_interactive_features')
         .select('*')
         .eq('stream_id', streamId)
@@ -108,7 +108,7 @@ export const StreamEnhancements = ({ streamId, isStreamer = false }: {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return data as InteractiveFeature[];
+      return (data || []) as InteractiveFeature[];
     },
   });
 

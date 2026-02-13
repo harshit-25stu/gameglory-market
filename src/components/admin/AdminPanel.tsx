@@ -48,7 +48,7 @@ const AdminPanel = ({ enabled }: AdminPanelProps) => {
       const [usersRes, ordersRes, disputesRes, postsRes] = await Promise.all([
         supabase.from("profiles").select("*", { count: "exact", head: true }),
         supabase.from("orders").select("*", { count: "exact", head: true }),
-        supabase.from("payment_disputes").select("*", { count: "exact", head: true }).eq("status", "open"),
+        (supabase as any).from("payment_disputes").select("*", { count: "exact", head: true }).eq("status", "open"),
         supabase.from("hub_posts").select("*", { count: "exact", head: true }),
       ]);
 
@@ -105,7 +105,7 @@ const AdminPanel = ({ enabled }: AdminPanelProps) => {
   const { data: openDisputes = [], isLoading: disputesLoading } = useQuery({
     queryKey: ["admin-open-disputes-v2"],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from("payment_disputes")
         .select(
           `
@@ -152,7 +152,7 @@ const AdminPanel = ({ enabled }: AdminPanelProps) => {
       if (!fn.error) return fn.data;
 
       // Fallback (mock): mark dispute resolved only
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from("payment_disputes")
         .update({
           status: "resolved",
@@ -283,7 +283,7 @@ const AdminPanel = ({ enabled }: AdminPanelProps) => {
 
       if (!res.error) return;
 
-      const { error } = await supabase.from("notifications").insert({
+      const { error } = await (supabase as any).from("notifications").insert({
         user_id: payload.sellerId,
         type: "admin",
         title: "Seller moderation notice",

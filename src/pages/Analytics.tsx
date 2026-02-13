@@ -90,7 +90,7 @@ const Analytics = () => {
         supabase.from('hub_members').select('*, game_hubs(*)').eq('user_id', userId),
 
         // Notifications
-        supabase.from('notifications').select('*').eq('user_id', userId)
+        (supabase as any).from('notifications').select('*').eq('user_id', userId)
           .order('created_at', { ascending: false }).limit(50)
       ]);
 

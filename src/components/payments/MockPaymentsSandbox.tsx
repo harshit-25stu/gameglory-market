@@ -57,7 +57,7 @@ const MockPaymentsSandbox = ({ userId }: MockPaymentsSandboxProps) => {
     queryFn: async () => {
       // Escrow table is created by our migrations. If the user hasn't applied them yet,
       // this will error; we show a helpful toast.
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from("escrow_accounts")
         .select("*")
         .or(`buyer_id.eq.${effectiveUserId},seller_id.eq.${effectiveUserId}`)
@@ -147,7 +147,7 @@ const MockPaymentsSandbox = ({ userId }: MockPaymentsSandboxProps) => {
       if (orderErr) throw orderErr;
 
       // 2) Create escrow record (held)
-      const { error: escrowErr } = await supabase.from("escrow_accounts").insert({
+      const { error: escrowErr } = await (supabase as any).from("escrow_accounts").insert({
         order_id: order.id,
         buyer_id: effectiveUserId,
         seller_id: sellerId,
@@ -187,13 +187,13 @@ const MockPaymentsSandbox = ({ userId }: MockPaymentsSandboxProps) => {
     mutationFn: async (escrowId: string) => {
       if (!effectiveUserId) throw new Error("Not signed in");
 
-      const { data: escrow, error } = await supabase.from("escrow_accounts").select("*").eq("id", escrowId).single();
+      const { data: escrow, error } = await (supabase as any).from("escrow_accounts").select("*").eq("id", escrowId).single();
       if (error) throw error;
       if (escrow.buyer_id !== effectiveUserId) throw new Error("Only the buyer can release escrow");
       if (escrow.status !== "held") throw new Error("Escrow is not in held status");
 
       // Update escrow
-      const { error: upErr } = await supabase.from("escrow_accounts").update({ status: "released", released_at: new Date().toISOString() }).eq("id", escrowId);
+      const { error: upErr } = await (supabase as any).from("escrow_accounts").update({ status: "released", released_at: new Date().toISOString() }).eq("id", escrowId);
       if (upErr) throw upErr;
 
       // Credit seller wallet
@@ -234,12 +234,12 @@ const MockPaymentsSandbox = ({ userId }: MockPaymentsSandboxProps) => {
     mutationFn: async (escrowId: string) => {
       if (!effectiveUserId) throw new Error("Not signed in");
 
-      const { data: escrow, error } = await supabase.from("escrow_accounts").select("*").eq("id", escrowId).single();
+      const { data: escrow, error } = await (supabase as any).from("escrow_accounts").select("*").eq("id", escrowId).single();
       if (error) throw error;
       if (escrow.status !== "held") throw new Error("Escrow is not in held status");
 
       // Update escrow status
-      const { error: upErr } = await supabase.from("escrow_accounts").update({ status: "refunded" }).eq("id", escrowId);
+      const { error: upErr } = await (supabase as any).from("escrow_accounts").update({ status: "refunded" }).eq("id", escrowId);
       if (upErr) throw upErr;
 
       // Credit buyer wallet back

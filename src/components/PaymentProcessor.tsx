@@ -316,12 +316,12 @@ export const EscrowStatus: React.FC<{ orderId: string }> = ({ orderId }) => {
 
   useState(() => {
     // Fetch escrow status
-    supabase
+    (supabase as any)
       .from('escrow_transactions')
       .select('*')
       .eq('order_id', orderId)
       .single()
-      .then(({ data }) => setEscrowStatus(data));
+      .then(({ data }: any) => setEscrowStatus(data));
   });
 
   if (!escrowStatus) return null;

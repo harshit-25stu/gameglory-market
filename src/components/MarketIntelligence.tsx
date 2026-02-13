@@ -84,14 +84,14 @@ export const MarketIntelligence = () => {
     queryFn: async () => {
       if (!userId) return [];
 
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('price_alerts')
         .select('*')
         .eq('user_id', userId)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return data as PriceAlert[];
+      return (data || []) as PriceAlert[];
     },
     enabled: !!userId,
   });
@@ -185,7 +185,7 @@ export const MarketIntelligence = () => {
   };
 
   const deleteAlert = async (alertId: string) => {
-    const { error } = await supabase
+    const { error } = await (supabase as any)
       .from('price_alerts')
       .delete()
       .eq('id', alertId);

@@ -9,6 +9,26 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Shield, CheckCircle, AlertTriangle, Clock, DollarSign, MessageSquare } from "lucide-react";
 
+interface EscrowAccount {
+  id: string;
+  order_id: string;
+  status: string;
+  total_amount: number;
+  platform_fee: number;
+  seller_amount: number;
+  created_at: string;
+  payment_disputes?: PaymentDispute[];
+}
+
+interface PaymentDispute {
+  id: string;
+  status: string;
+  reason: string;
+  description: string;
+  resolution?: string;
+  admin_notes?: string;
+}
+
 interface EscrowManagerProps {
   orderId: string;
   userRole: 'buyer' | 'seller';
@@ -24,7 +44,7 @@ export const EscrowManager = ({ orderId, userRole }: EscrowManagerProps) => {
   const { data: escrowData, isLoading } = useQuery({
     queryKey: ['escrow', orderId],
     queryFn: async () => {
-      const { data: escrow } = await supabase
+      const { data: escrow } = await (supabase as any)
         .from('escrow_accounts')
         .select(`
           *,
@@ -34,7 +54,7 @@ export const EscrowManager = ({ orderId, userRole }: EscrowManagerProps) => {
         .eq('order_id', orderId)
         .single();
 
-      return escrow;
+      return escrow as EscrowAccount | null;
     },
   });
 
@@ -49,23 +69,15 @@ export const EscrowManager = ({ orderId, userRole }: EscrowManagerProps) => {
           }
         }
       });
-
       if (error) throw error;
       return data;
     },
     onSuccess: () => {
-      toast({
-        title: "Funds Released!",
-        description: "The funds have been successfully transferred to the seller.",
-      });
+      toast({ title: "Funds Released!", description: "The funds have been successfully transferred to the seller." });
       queryClient.invalidateQueries({ queryKey: ['escrow', orderId] });
     },
     onError: (error: any) => {
-      toast({
-        title: "Error",
-        description: error.message || "Failed to release funds",
-        variant: "destructive",
-      });
+      toast({ title: "Error", description: error.message || "Failed to release funds", variant: "destructive" });
     },
   });
 
@@ -83,26 +95,18 @@ export const EscrowManager = ({ orderId, userRole }: EscrowManagerProps) => {
           }
         }
       });
-
       if (error) throw error;
       return data;
     },
     onSuccess: () => {
-      toast({
-        title: "Dispute Created",
-        description: "Your dispute has been submitted and will be reviewed by our team.",
-      });
+      toast({ title: "Dispute Created", description: "Your dispute has been submitted and will be reviewed by our team." });
       queryClient.invalidateQueries({ queryKey: ['escrow', orderId] });
       setDisputeReason("");
       setDisputeDescription("");
       setEvidenceUrls([]);
     },
     onError: (error: any) => {
-      toast({
-        title: "Error",
-        description: error.message || "Failed to create dispute",
-        variant: "destructive",
-      });
+      toast({ title: "Error", description: error.message || "Failed to create dispute", variant: "destructive" });
     },
   });
 
@@ -154,7 +158,7 @@ export const EscrowManager = ({ orderId, userRole }: EscrowManagerProps) => {
 
   const canReleaseFunds = userRole === 'buyer' && escrowData.status === 'held';
   const canCreateDispute = ['buyer', 'seller'].includes(userRole) && escrowData.status === 'held';
-  const hasActiveDispute = escrowData.payment_disputes?.some((d: any) => d.status === 'open');
+  const hasActiveDispute = escrowData.payment_disputes?.some((d) => d.status === 'open');
 
   return (
     <Card>
@@ -166,7 +170,6 @@ export const EscrowManager = ({ orderId, userRole }: EscrowManagerProps) => {
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {/* Status */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className={`w-3 h-3 rounded-full ${getStatusColor(escrowData.status)}`} />
@@ -178,7 +181,6 @@ export const EscrowManager = ({ orderId, userRole }: EscrowManagerProps) => {
           </Badge>
         </div>
 
-        {/* Escrow Details */}
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
             <p className="text-muted-foreground">Total Amount</p>
@@ -200,7 +202,6 @@ export const EscrowManager = ({ orderId, userRole }: EscrowManagerProps) => {
           </div>
         </div>
 
-        {/* Actions */}
         {canReleaseFunds && (
           <div className="space-y-2">
             <div className="bg-green-50 dark:bg-green-950/20 p-3 rounded-lg">
@@ -209,7 +210,6 @@ export const EscrowManager = ({ orderId, userRole }: EscrowManagerProps) => {
                 <span>Item received? Release funds to complete the transaction.</span>
               </div>
             </div>
-
             <Button
               onClick={() => releaseFundsMutation.mutate()}
               disabled={releaseFundsMutation.isPending}
@@ -238,7 +238,6 @@ export const EscrowManager = ({ orderId, userRole }: EscrowManagerProps) => {
                 <span>Having issues? Create a dispute to protect your transaction.</span>
               </div>
             </div>
-
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant="outline" className="w-full border-yellow-500 text-yellow-700 hover:bg-yellow-50">
@@ -246,20 +245,14 @@ export const EscrowManager = ({ orderId, userRole }: EscrowManagerProps) => {
                   Create Dispute
                 </Button>
               </DialogTrigger>
-
               <DialogContent className="max-w-md">
                 <DialogHeader>
                   <DialogTitle>Create Payment Dispute</DialogTitle>
                 </DialogHeader>
-
                 <div className="space-y-4">
                   <div>
                     <label className="text-sm font-medium">Reason</label>
-                    <select
-                      value={disputeReason}
-                      onChange={(e) => setDisputeReason(e.target.value)}
-                      className="w-full mt-1 p-2 border rounded-lg"
-                    >
+                    <select value={disputeReason} onChange={(e) => setDisputeReason(e.target.value)} className="w-full mt-1 p-2 border rounded-lg">
                       <option value="">Select a reason</option>
                       <option value="item_not_received">Item not received</option>
                       <option value="item_not_as_described">Item not as described</option>
@@ -268,22 +261,11 @@ export const EscrowManager = ({ orderId, userRole }: EscrowManagerProps) => {
                       <option value="other">Other</option>
                     </select>
                   </div>
-
                   <div>
                     <label className="text-sm font-medium">Description</label>
-                    <Textarea
-                      value={disputeDescription}
-                      onChange={(e) => setDisputeDescription(e.target.value)}
-                      placeholder="Provide details about the issue..."
-                      rows={3}
-                    />
+                    <Textarea value={disputeDescription} onChange={(e) => setDisputeDescription(e.target.value)} placeholder="Provide details about the issue..." rows={3} />
                   </div>
-
-                  <Button
-                    onClick={() => createDisputeMutation.mutate()}
-                    disabled={!disputeReason || !disputeDescription || createDisputeMutation.isPending}
-                    className="w-full"
-                  >
+                  <Button onClick={() => createDisputeMutation.mutate()} disabled={!disputeReason || !disputeDescription || createDisputeMutation.isPending} className="w-full">
                     {createDisputeMutation.isPending ? (
                       <>
                         <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
@@ -311,8 +293,7 @@ export const EscrowManager = ({ orderId, userRole }: EscrowManagerProps) => {
           </div>
         )}
 
-        {/* Active Disputes */}
-        {escrowData.payment_disputes?.map((dispute: any) => (
+        {escrowData.payment_disputes?.map((dispute) => (
           <div key={dispute.id} className="border rounded-lg p-3 space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -323,12 +304,10 @@ export const EscrowManager = ({ orderId, userRole }: EscrowManagerProps) => {
                 {dispute.status}
               </Badge>
             </div>
-
             <div>
               <p className="text-sm text-muted-foreground">Reason: {dispute.reason}</p>
               <p className="text-sm">{dispute.description}</p>
             </div>
-
             {dispute.resolution && (
               <div className="bg-muted p-2 rounded text-sm">
                 <strong>Resolution:</strong> {dispute.resolution}
