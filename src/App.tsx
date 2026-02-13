@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { NotificationProvider } from "@/contexts/NotificationContext";
 import Index from "./pages/Index";
+import Splash from "./pages/Splash";
 import Auth from "./pages/Auth";
 import Hubs from "./pages/Hubs";
 import GameHub from "./pages/GameHub";
@@ -39,7 +40,8 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<Splash />} />
+            <Route path="/home" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/hubs" element={<Hubs />} />
             <Route path="/hubs/:slug" element={<GameHub />} />
