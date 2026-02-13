@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -15,12 +15,14 @@ const Dashboard = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [profile, setProfile] = useState<any>(null);
 
-  // NOTE: there is no role system in DB yet. Keep this simple for now.
-  const isAdmin = useMemo(() => {
-    const username = (profile?.username || "").toLowerCase();
-    const email = (profile?.email || "").toLowerCase();
-    return username === "admin" || email.includes("admin") || true; // demo: enable admin panel
-  }, [profile]);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // Check admin role from database
+  useEffect(() => {
+    if (!userId) return;
+    supabase.rpc('has_role', { _user_id: userId, _role: 'admin' })
+      .then(({ data }) => setIsAdmin(!!data));
+  }, [userId]);
 
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
